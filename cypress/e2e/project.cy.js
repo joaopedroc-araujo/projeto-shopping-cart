@@ -1,5 +1,5 @@
 const fetchMock = require('../mocks/fetch');
-const {results: products, pictures} = require('../mocks/computerCategory');
+const { results: products, pictures } = require('../mocks/computerCategory');
 const { fetchProductsList, fetchProduct } = require('../../src/helpers/fetchFunctions');
 
 const PROJECT_URL = 'localhost:5173';
@@ -157,7 +157,7 @@ describe('Shopping Cart Project', () => {
 
     it('fetchProduct retorna os dados do produto', () => {
       const expectedResult = results.find(({ id }) => id === 'MLB1405519561');
-      cy.wrap(fetchProduct('MLB1405519561')).should('be.deep.equal', {...expectedResult, pictures});
+      cy.wrap(fetchProduct('MLB1405519561')).should('be.deep.equal', { ...expectedResult, pictures });
     });
   });
 
@@ -257,7 +257,7 @@ describe('Shopping Cart Project', () => {
     });
   });
 
-  describe('11 - Implemente a função `getAddress`', () => { 
+  describe('11 - Implemente a função `getAddress`', () => {
     it('Verifica se o endereço é exibido após o CEP ser digitado', () => {
       cy.visit(PROJECT_URL, {
         onBeforeLoad(win) {
