@@ -10,11 +10,12 @@ describe('Teste a função fetchProduct', () => {
 
   it('fetchProduct com MLB1405519561 como argumento chama uma fetch', async () => {
     await fetch(`https://api.mercadolibre.com/items/MLB1405519561`);
+    console.log(fetch)
     expect(fetch).toHaveBeenCalled();
   });
 
   it('fetchProduct com o argumento "MLB1405519561" retorna o endpoint correto', async () => {
-    await fetch('https://api.mercadolibre.com/items/MLB1405519561');
+    await fetchProduct('MLB1405519561');
     expect(fetch).toHaveBeenCalledWith('https://api.mercadolibre.com/items/MLB1405519561');
   });
 

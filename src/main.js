@@ -5,14 +5,20 @@ import './style.css';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 
-const listOfProducts = await fetchProductsList('computador');
 const productsContainer = document.querySelector('.products');
 const containerSection = document.querySelector('.container');
 
-listOfProducts.forEach((product) => {
-  const productEl = createProductElement(product);
-  productsContainer.appendChild(productEl);
-});
+async function renderProducts() {
+  try {
+    const listOfProducts = await fetchProductsList('computador');
+    listOfProducts.forEach((product) => {
+      const productEl = createProductElement(product);
+      productsContainer.appendChild(productEl);
+    });
+  } catch (error) {
+    console.error(error);
+  }
+}
 
 function showLoadingMessage() {
   const loading = document.createElement('div');
@@ -56,3 +62,4 @@ async function fetchApi() {
 }
 
 fetchApi();
+renderProducts();

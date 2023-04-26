@@ -1,5 +1,18 @@
-export const fetchProduct = async () => {
+export const fetchProduct = async (ProductID) => {
+  try {
+    if (!ProductID) {
+      throw new Error('ID não informado');
+    }
 
+    const API_URL = `https://api.mercadolibre.com/items/${ProductID}`;
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    // console.log(data);
+    return data;
+  } catch (error) {
+    const errorMessage = error.message;
+    return errorMessage;
+  }
 };
 
 export const fetchProductsList = async (item) => {
@@ -18,3 +31,5 @@ export const fetchProductsList = async (item) => {
     throw error;
   }
 };
+
+// fetchProduct('MLB1405519561');
