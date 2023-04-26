@@ -29,14 +29,27 @@ function hideLoadingMessage() {
   }
 }
 
+function showErrorMessage() {
+  const errorEl = document.createElement('div');
+  errorEl.classList.add('error');
+  errorEl.textContent = 'Algum erro ocorreu, recarregue a página e tente novamente';
+  containerSection.insertBefore(errorEl, containerSection.querySelector('.products'));
+}
+
+const errorEl = document.querySelector('.error');
+if (errorEl) {
+  errorEl.parentNode.removeChild(errorEl);
+}
+
 async function fetchApi() {
   showLoadingMessage();
   try {
     const response = await fetch('https://api.mercadolibre.com/sites/MLB/search?q=computador');
     const data = await response.json();
-    console.log(data);
+    return data;
   } catch (error) {
     console.error(error);
+    showErrorMessage();
   } finally {
     hideLoadingMessage();
   }

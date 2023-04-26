@@ -1,5 +1,5 @@
-export const fetchProduct = () => {
-  // seu código aqui
+export const fetchProduct = async () => {
+
 };
 
 export const fetchProductsList = async (item) => {
