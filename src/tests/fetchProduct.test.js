@@ -26,13 +26,6 @@ describe('Teste a função fetchProduct', () => {
   });
 
   it('fetchProduct passada sem argumentos retorna uma mensagem de erro', async () => {
-    try {
-      await fetchProduct('');
-    } catch (error) {
-      expect(error).toBeInstanceOf(Error);
-      const fetchedProduct = await fetchProduct('');
-
-      expect(() => fetchedProduct).toThrow('ID não informado');
-    }
+    await expect(fetchProduct()).rejects.toThrow('ID não informado');
   });
 });
