@@ -1,4 +1,4 @@
-import { saveCartID } from './helpers/cartFunctions';
+import { saveCartID, getSavedCartIDs } from './helpers/cartFunctions';
 import { searchCep } from './helpers/cepFunctions';
 import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
 import { createCartProductElement, createProductElement } from './helpers/shopFunctions';
@@ -14,8 +14,6 @@ async function selectElements() {
   const cartList = document.querySelector('.cart__products');
   const cartBtns = document.querySelectorAll('.product__add');
   cartBtns.forEach((button) => button.addEventListener('click', async () => {
-    // Com os dados do produtos retornados, você deve adicionar o produto ao carrinho de compras, utilize a função createCartProductElement (que se encontra no arquivo shopFunction.js) para criar os componentes HTML referentes a um produto do carrinho;
-    // Adicione o elemento retornado da função createCartElement(product) como filho do elemento <ol class="cart__products">.
     const id = button.closest('.product').querySelector('.product__id').textContent;
     // console.log(id);
     saveCartID(id);
@@ -32,16 +30,12 @@ async function selectElements() {
 }
 
 async function renderProducts() {
-  try {
-    const listOfProducts = await fetchProductsList('computador');
-    listOfProducts.forEach((product) => {
-      const productEl = createProductElement(product);
-      productsContainer.appendChild(productEl);
-    });
-    selectElements();
-  } catch (error) {
-    console.error(error);
-  }
+  const listOfProducts = await fetchProductsList('computador');
+  listOfProducts.forEach((product) => {
+    const productEl = createProductElement(product);
+    productsContainer.appendChild(productEl);
+  });
+  selectElements();
 }
 
 function showLoadingMessage() {
@@ -85,5 +79,21 @@ async function fetchApi() {
   }
 }
 
+
+async function listLocalStorageCart() {
+  const ids = getSavedCartIDs();
+  console.log(ids);
+  const listOfProducts = document.querySelector('.cart__products');
+  const savedPromisses = ids.map(fetchProduct);
+  // console.log(savedPromisses);
+  const cartProductsList = await Promise.all(savedPromisses);
+  // console.log(cartProductsList);
+  cartProductsList.forEach((product) => {
+    const cartProduct = createCartProductElement(product);
+    listOfProducts.appendChild(cartProduct);
+  });
+}
+
+listLocalStorageCart();
 fetchApi();
 renderProducts();
