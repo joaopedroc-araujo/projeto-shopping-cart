@@ -79,7 +79,6 @@ async function fetchApi() {
   }
 }
 
-
 async function listLocalStorageCart() {
   const ids = getSavedCartIDs();
   console.log(ids);

@@ -1,5 +1,3 @@
-
-
 export const fetchProduct = async (ProductID) => {
   if (!ProductID) {
     throw new Error('ID não informado');
@@ -27,7 +25,6 @@ export const fetchProductsList = async (item) => {
     throw error;
   }
 };
-
 
 // listLocalStorageCart()
 // fetchProduct();
