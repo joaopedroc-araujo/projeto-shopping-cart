@@ -122,5 +122,6 @@ async function calculateTotal() {
 }
 
 listLocalStorageCart();
-fetchApi();
 renderProducts();
+
+window.onload = fetchApi();
