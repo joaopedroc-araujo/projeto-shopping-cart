@@ -9,6 +9,12 @@ document.querySelector('.cep-button').addEventListener('click', searchCep);
 const containerSection = document.querySelector('.container');
 const productsContainer = document.querySelector('.products');
 
+const observer = new MutationObserver(calculateTotal);
+const config = { childList: true };
+const targetNode = document.querySelector('.cart__products');
+
+observer.observe(targetNode, config);
+
 async function selectElements() {
   // const product = document.querySelectorAll('.product');
   const cartList = document.querySelector('.cart__products');
@@ -36,6 +42,7 @@ async function renderProducts() {
     productsContainer.appendChild(productEl);
   });
   selectElements();
+  calculateTotal();
 }
 
 function showLoadingMessage() {
@@ -91,6 +98,23 @@ async function listLocalStorageCart() {
     const cartProduct = createCartProductElement(product);
     listOfProducts.appendChild(cartProduct);
   });
+}
+
+export async function calculateTotal() {
+  const cartProducts = getSavedCartIDs();
+  console.log(cartProducts)
+  let total = 0;
+
+  const productPromises = cartProducts.map(fetchProduct);
+  const products = await Promise.all(productPromises);
+  console.log(products)
+
+  products.forEach(({ price }) => (total += price));
+
+  console.log(total)
+
+  const totalPriceElement = document.querySelector('.total-price');
+  totalPriceElement.textContent = total.toFixed(2);
 }
 
 listLocalStorageCart();
