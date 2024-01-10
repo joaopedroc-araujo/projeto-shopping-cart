@@ -121,7 +121,8 @@ async function calculateTotal() {
   totalPriceElement.textContent = total.toFixed(2);
 }
 
-listLocalStorageCart();
-renderProducts();
-
-window.onload = fetchApi();
+window.onload = () => {
+  fetchApi();
+  listLocalStorageCart();
+  renderProducts();
+};
