@@ -1,3 +1,5 @@
+/* eslint-disable sonarjs/no-duplicate-string */
+/* eslint-disable no-use-before-define */
 import { saveCartID, getSavedCartIDs } from './helpers/cartFunctions';
 import { searchCep } from './helpers/cepFunctions';
 import { fetchProduct, fetchProductsList } from './helpers/fetchFunctions';
@@ -42,6 +44,7 @@ async function renderProducts() {
     productsContainer.appendChild(productEl);
   });
   selectElements();
+  // eslint-disable-next-line no-use-before-define
   calculateTotal();
 }
 
@@ -100,18 +103,19 @@ async function listLocalStorageCart() {
   });
 }
 
-export async function calculateTotal() {
+async function calculateTotal() {
   const cartProducts = getSavedCartIDs();
-  console.log(cartProducts)
+  // console.log(cartProducts)
   let total = 0;
 
   const productPromises = cartProducts.map(fetchProduct);
   const products = await Promise.all(productPromises);
-  console.log(products)
+  // console.log(products)
 
+  // eslint-disable-next-line no-return-assign
   products.forEach(({ price }) => (total += price));
 
-  console.log(total)
+  // console.log(total)
 
   const totalPriceElement = document.querySelector('.total-price');
   totalPriceElement.textContent = total.toFixed(2);
